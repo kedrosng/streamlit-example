@@ -15,7 +15,7 @@ user_input = st.text_input("You:", key="user_input")
 # When the user presses enter, send the input to the chatbot API
 if user_input:
     payload = {
-        "model": "mistral-7b-instruct",
+        "model": "pplx-70b-online",
         "messages": [
             {
                 "role": "system",

@@ -2,6 +2,11 @@ import streamlit as st
 import requests
 from streamlit_chat import message  # Make sure this import is correct
 
+if 'generated' not in st.session_state:
+    st.session_state['generated'] = []
+if 'past' not in st.session_state:
+    st.session_state['past'] = []
+    
 # Setting page title and header
 st.set_page_config(page_title="AVA", page_icon=":robot_face:")
 st.markdown("<h1 style='text-align: center;'>AVA - a totally harmless chatbot 😬</h1>", unsafe_allow_html=True)

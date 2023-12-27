@@ -25,8 +25,6 @@ def ask_chatgpt(prompt, model):
   response = requests.post(url, json=payload, headers=headers)
   return response.json()["choices"][0]["message"]["content"]
 
-st.title("Chat with PPLX")
-
 # Initialize chat history like the Counter example
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []

@@ -20,7 +20,7 @@ if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
 def get_response(prompt):
-    payload = {"model": selected_model, "messages": [{"role": "user", "content": prompt}],"stream": true}
+    payload = {"model": selected_model, "messages": [{"role": "user", "content": prompt}],"stream": True}
     response = requests.post(url, json=payload, headers=headers).json()
     return response["choices"][0]["message"]["content"]
 

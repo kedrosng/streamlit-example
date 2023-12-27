@@ -32,11 +32,12 @@ def add_conversation():
 def clear_conversations():
     st.session_state.conversations = {}
 
-if "active_conversation" not in st.session_state and st.session_state.conversations:
-    st.session_state.active_conversation = list(st.session_state.conversations.keys())[0]
-elif not st.session_state.conversations:
+if "active_conversation" not in st.session_state:
+  if not st.session_state.conversations:
     add_conversation()
     st.session_state.active_conversation = list(st.session_state.conversations.keys())[0]
+  else:
+    st.session_state.active_conversation = list(st.session_state.conversations.keys())[0] 
 
 conversation_tabs = st.sidebar.tabs(st.session_state.conversations.keys())
 st.session_state.active_conversation = conversation_tabs[0]

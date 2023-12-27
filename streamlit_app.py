@@ -1,9 +1,9 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="Chat with PPLX", page_icon=":robot:")
+st.set_page_config(page_title="Intelligent Chat", page_icon=":robot:")
 
-st.title("Chat with PPLX")
+st.title("Intelligent Chat")
 
 url = "https://api.perplexity.ai/chat/completions" 
 headers = {

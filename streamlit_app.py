@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 st.set_page_config(page_title="Chat with PPLX", page_icon=":robot:")
-st.text(f"You are chatting with the {selected_model} model.")
+
 price_table = """
 | Model Parameter Count | $/1M input tokens | $/1M output tokens |
 |-----------------------|-------------------|--------------------|
@@ -33,7 +33,7 @@ models = [
 ]
 
 selected_model = st.sidebar.selectbox("Select Model", models)
-
+st.text(f"You are chatting with the {selected_model} model.")
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 

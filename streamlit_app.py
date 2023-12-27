@@ -10,14 +10,9 @@ headers = {
     "authorization": "Bearer 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"
 }
 
-models = ["pplx-7b-chat (input $0.07, output $0.28)",
-          "pplx-70b-chat (input $0.70, output $2.80)",  
-          "pplx-7b-online (requests $5, output $0.28)",
-          "pplx-70b-online (requests $5, output $2.80)",
-          "llama-2-70b-chat (input $0.70, output $2.80)",
-          "codellama-34b-instruct (input $0.35, output $1.40)",
-          "mistral-7b-instruct (input $0.07, output $0.28)",
-          "mixtral-8x7b-instruct (input $0.14, output $0.56)"]
+models = ["pplx-7b-chat", "pplx-70b-chat", "pplx-7b-online", "pplx-70b-online",
+"llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct",
+"mixtral-8x7b-instruct"]
 
 selected_model = st.sidebar.selectbox("Select Model", models)
 

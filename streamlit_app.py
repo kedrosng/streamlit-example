@@ -1,16 +1,20 @@
 import streamlit as st
 import requests
 
+st.set_page_config(page_title="Chat with PPLX", page_icon=":robot:") 
+
+st.title("Chat with PPLX")
+
 url = "https://api.perplexity.ai/chat/completions"
 headers = {
   "authorization": "Bearer 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"  
 }
 
-models = ["pplx-7b-chat", "pplx-70b-chat", "pplx-7b-online", "pplx-70b-online", 
-          "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct", 
+models = ["pplx-7b-chat", "pplx-70b-chat", "pplx-7b-online", "pplx-70b-online",
+          "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct",  
           "mixtral-8x7b-instruct"]
 
-selected_model = st.selectbox("Select Model", models)
+selected_model = st.sidebar.selectbox("Select Model", models)
 
 def ask_chatgpt(prompt, model):
   payload = {
@@ -34,5 +38,5 @@ if st.button("Send"):
   st.session_state.chat_history.append({"user": user_input, "PPLX": response})
 
 for message in st.session_state.chat_history:
-  st.text("You: " + message["user"]) 
-  st.text("PPLX: " + message["PPLX"])
+  st.markdown("You: " + message["user"]) 
+  st.markdown("PPLX: " + message["PPLX"])

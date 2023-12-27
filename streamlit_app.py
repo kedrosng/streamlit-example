@@ -61,7 +61,7 @@ def chat_history_to_md(chat_history):
     chat_id = 1
     for msg in chat_history:
         markdown_text += f"**#{chat_id} You:** {msg['user']}\n\n"
-        markdown_text += f"**#{chat_id} PPLX:** {msg['PPLX']}\n\n"
+        markdown_text += f"**#{chat_id} ChatBotPPLX:** {msg['PPLX']}\n\n"
         chat_id += 1
     return markdown_text
 

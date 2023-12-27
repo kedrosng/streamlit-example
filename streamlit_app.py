@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-from streamlit_chat import message
 
 # Setting page title and header
 st.set_page_config(page_title="AVA", page_icon=":robot_face:")

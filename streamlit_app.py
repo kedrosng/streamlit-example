@@ -1,5 +1,10 @@
 import streamlit as st
 import requests
+from streamlit_chat import message
+
+# Setting page title and header
+st.set_page_config(page_title="AVA", page_icon=":robot_face:")
+st.markdown("<h1 style='text-align: center;'>AVA - a totally harmless chatbot 😬</h1>", unsafe_allow_html=True)
 
 # Define the API URL and the headers including the authorization token
 url = "https://api.perplexity.ai/chat/completions"
@@ -9,11 +14,22 @@ headers = {
     "authorization": "Bearer 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"
 }
 
-# Create a text input box for user input
-user_input = st.text_input("You:", key="user_input")
+# Initialise session state variables
+if 'generated' not in st.session_state:
+    st.session_state['generated'] = []
+if 'past' not in st.session_state:
+    st.session_state['past'] = []
 
-# When the user presses enter, send the input to the chatbot API
-if user_input:
+# Sidebar - let user clear the current conversation
+st.sidebar.title("Sidebar")
+clear_button = st.sidebar.button("Clear Conversation", key="clear")
+
+if clear_button:
+    st.session_state['generated'] = []
+    st.session_state['past'] = []
+
+# generate a response using Perplexity AI
+def generate_response(prompt):
     payload = {
         "model": "pplx-70b-online",
         "messages": [
@@ -23,21 +39,37 @@ if user_input:
             },
             {
                 "role": "user",
-                "content": user_input
+                "content": prompt
             }
         ]
     }
 
-    # Make the POST request to the API
     response = requests.post(url, json=payload, headers=headers)
 
-    # If the request is successful, display the response
     if response.status_code == 200:
         response_data = response.json()
-        chatbot_response = response_data.get("choices", [{}])[0].get("message", {}).get("content", "")
-        st.text_area("Chatbot:", value=chatbot_response, height=100, key="chatbot_response")
+        return response_data.get("choices", [{}])[0].get("message", {}).get("content", "")
     else:
-        st.error("Failed to get response from the chatbot API")
+        return "Failed to get response from the chatbot API"
+
+# container for chat history
+response_container = st.container()
+# container for text box
+container = st.container()
+
+with container:
+    user_input = st.text_input("You:", key="user_input")
+
+    if user_input:
+        output = generate_response(user_input)
+        st.session_state['past'].append(user_input)
+        st.session_state['generated'].append(output)
+
+if st.session_state['generated']:
+    with response_container:
+        for i in range(len(st.session_state['generated'])):
+            message(st.session_state["past"][i], is_user=True, key=str(i) + '_user')
+            message(st.session_state["generated"][i], key=str(i))
 
 # Run the Streamlit app
 if __name__ == '__main__':

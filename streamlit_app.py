@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 st.set_page_config(page_title="Chat with PPLX", page_icon=":robot:")
-
+st.text(f"You are chatting with the {selected_model} model.")
 price_table = """
 | Model Parameter Count | $/1M input tokens | $/1M output tokens |
 |-----------------------|-------------------|--------------------|
@@ -69,7 +69,7 @@ chat_placeholder.markdown(chat_history_to_md(st.session_state.chat_history), uns
 
 user_input = st.text_input("You:", value="", on_change=send_message, key="user_input")
 
-st.text(f"You are chatting with the {selected_model} model.")
+
 st.sidebar.markdown("## Pricing Information")
 st.sidebar.markdown(price_table)
 

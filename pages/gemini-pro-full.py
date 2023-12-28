@@ -9,6 +9,8 @@ import requests
 #Plus que les sentiments,
 #Plus que la vie elle-même
 
+
+
 st.set_page_config(
     page_title="Google AI Chat",
     page_icon="https://seeklogo.com/images/G/google-ai-logo-996E85F6FD-seeklogo.com.png",

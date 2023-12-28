@@ -89,7 +89,7 @@ def load_modelvision() -> genai.GenerativeModel:
 
 #------------------------------------------------------------
 #CONFIGURATION
-genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+genai.configure(api_key="AIzaSyBwibYDUMg8gFiKBvRRJjvJCiLTi6_Er3Q")
 
 model = load_model()
 

@@ -3,14 +3,6 @@ import requests
 
 st.set_page_config(page_title="Chat with PPLX", page_icon=":robot:")
 
-sidebar_style = """
-<style>
-[data-testid="stSidebar"] > div:first-child {
-    background-color: #fdebd0;
-}
-</style>
-"""
-st.markdown(sidebar_style, unsafe_allow_html=True)
 
 price_table = """
 | Model Parameter Count | $/1M input tokens | $/1M output tokens |

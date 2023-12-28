@@ -15,8 +15,8 @@ def configure_ai_model():
     genai.configure(api_key=api_key)
 
     temperature = st.sidebar.slider("Temperature", 0.0, 1.0, 0.6, 0.1)
-    top_p = st.sidebar.number_input("Top P", 0.0, 1.0, 1.0, 0.1)
-    top_k = st.sidebar.number_input("Top K", 1, 100, 1)
+    top_p = st.sidebar.number_input("Top P", 0.0, 1.0,0.6, 0.1)
+    top_k = st.sidebar.number_input("Top K", 1, 85, 1)
     max_output_tokens = st.sidebar.number_input("Max Output Tokens", 1, 10000, 2048)
 
     generation_config = {

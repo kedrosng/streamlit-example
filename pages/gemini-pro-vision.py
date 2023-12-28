@@ -10,7 +10,7 @@ def initialize_session_state():
 
 # Main Streamlit app
 def home():
-    st.title("Gemini Po Vision")
+    st.title("Gemini Pro Vision 👁️‍🗨️")
 
     # Initialize session state
     initialize_session_state()

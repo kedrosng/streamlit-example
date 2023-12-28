@@ -8,7 +8,7 @@ def initialize_session_state():
 
 # Main Streamlit app
 def text_page():
-    st.title("Gemini Pro")
+    st.title("Gemini Pro 🤖")
 
     # Initialize session state
     initialize_session_state()

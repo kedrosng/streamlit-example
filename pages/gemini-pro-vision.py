@@ -10,14 +10,14 @@ def initialize_session_state():
 
 # Main Streamlit app
 def home():
-    st.title("Gemini NexusCraft")
+    st.title("Gemini Po Vision")
 
     # Initialize session state
     initialize_session_state()
 
     # Configure API key
-    api_key = st.sidebar.text_input("Enter your API key:", value=st.session_state.api_key)
-
+    #api_key = st.sidebar.text_input("Enter your API key:", value=st.session_state.api_key)
+    api_key = "AIzaSyBwibYDUMg8gFiKBvRRJjvJCiLTi6_Er3Q"
     # Check if the API key is provided
     if not api_key:
         st.sidebar.error("Please enter your API key.")
@@ -78,7 +78,7 @@ def home():
             ]
 
         # Set up the model configuration options
-    temperature = st.sidebar.slider("Temperature", 0.0, 1.0, 0.9, 0.1)
+    temperature = st.sidebar.slider("Temperature", 0.0, 1.0, 0.6, 0.1)
     top_p = st.sidebar.number_input("Top P", 0.0, 1.0, 1.0, 0.1)
     top_k = st.sidebar.number_input("Top K", 1, 100, 1)
     max_output_tokens = st.sidebar.number_input("Max Output Tokens", 1, 5000, 2048)

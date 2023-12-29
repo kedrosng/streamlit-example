@@ -5,11 +5,12 @@ import json
 
 
 session = requests.Session()
-
-token = 'ewiguUbsFv4Y2Iwt_nPikDZ9GLaiRipbRV0fSXj4WIOKyGmi4nLMOnuujMU0vSfRvFXSSA.'
+psid = st.text_input("Enter __Secure-1PSID value:")
+psidts = st.text_input("Enter __Secure-1PSIDTS value:")
+token = psid
 session.cookies.set("__Secure-1PSID", token)
-session.cookies.set( "__Secure-1PSIDCC", "ABTWhQEdIisXan1iW4sYI4WxH-fugcaeNUV_F3Wg7a8CqH-U2G1yx0vbpxYk5fvSOLXyGYokyA")
-session.cookies.set("__Secure-1PSIDTS", "sidts-CjIBPVxjSgIJIjWvuEXnrNQhbwoBkVunzk1J3aT-payLs2KLApF0pnXfS299oibTLrUClRAA")
+#session.cookies.set( "__Secure-1PSIDCC", "ABTWhQEdIisXan1iW4sYI4WxH-fugcaeNUV_F3Wg7a8CqH-U2G1yx0vbpxYk5fvSOLXyGYokyA")
+session.cookies.set("__Secure-1PSIDTS", psidts)
 session.headers = SESSION_HEADERS
 bard = Bard(token=token, session=session, timeout=30)
 #new_cookies = bard.update_1PSIDTS()

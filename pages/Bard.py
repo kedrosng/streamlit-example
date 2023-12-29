@@ -9,7 +9,7 @@ psid = st.text_input("Enter __Secure-1PSID value:")
 psidts = st.text_input("Enter __Secure-1PSIDTS value:")
 idcc = st.text_input("Enter IDCC value:")
 token = psid
-session.cookies.set("__Secure-1PSID", token)
+session.cookies.set("__Secure-1PSID", psid)
 session.cookies.set( "__Secure-1PSIDCC", idcc)
 session.cookies.set("__Secure-1PSIDTS", psidts)
 session.headers = SESSION_HEADERS

@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="Chat with PPLX (Paid)", page_icon=":robot:")
+st.set_page_config(page_title="Perplexity AI (Paid)", page_icon=":robot:")
 
 
 price_table = """

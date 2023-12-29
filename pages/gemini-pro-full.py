@@ -12,7 +12,7 @@ import requests
 
 
 st.set_page_config(
-    page_title="Google AI Chat (Free)",
+    page_title="Google Gemini Full (Free)",
     page_icon="https://seeklogo.com/images/G/google-ai-logo-996E85F6FD-seeklogo.com.png",
     layout="wide",
 )

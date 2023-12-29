@@ -3,17 +3,31 @@ from bardapi import Bard, SESSION_HEADERS
 import streamlit as st
 import json
 
+
 session = requests.Session()
-token = "dQigufHtC5Oj_0GMxZ5OdO10N_8dp_mQDwmT5YEb8a3goz8DOIB8JMZcyPf-RpdRai8IuA."
-session.cookies.set("__Secure-1PSID", 'dQigufHtC5Oj_0GMxZ5OdO10N_8dp_mQDwmT5YEb8a3goz8DOIB8JMZcyPf-RpdRai8IuA.')
-session.cookies.set( "__Secure-1PSIDCC", "ABTWhQEIzXCIPJ3zE0DuIjnWyz9_drMrKo595e_eurLwqJKsLHJJALKUucrLsSEyzdWF7gtI8-s")
-session.cookies.set("__Secure-1PSIDTS", "sidts-CjEBPVxjSuQb_VTuETdeQebgZeeY40O0bdB4pYZZzss-N5sobqtNMQ6Fe62fCHoucRQ3EAA")
+
+token = 'ewiguUbsFv4Y2Iwt_nPikDZ9GLaiRipbRV0fSXj4WIOKyGmi4nLMOnuujMU0vSfRvFXSSA.'
+session.cookies.set("__Secure-1PSID", token)
+session.cookies.set( "__Secure-1PSIDCC", "ABTWhQEdIisXan1iW4sYI4WxH-fugcaeNUV_F3Wg7a8CqH-U2G1yx0vbpxYk5fvSOLXyGYokyA")
+session.cookies.set("__Secure-1PSIDTS", "sidts-CjIBPVxjSgIJIjWvuEXnrNQhbwoBkVunzk1J3aT-payLs2KLApF0pnXfS299oibTLrUClRAA")
 session.headers = SESSION_HEADERS
+bard = Bard(token=token, session=session, timeout=30)
+#new_cookies = bard.update_1PSIDTS()
+#print('New cookies:', new_cookies)
+#print(new_cookies.get("__Secure-1PSIDTS"))
+#print(new_cookies.get("__Secure-1PSIDCC"))
+#print(new_cookies.get("__Secure-3PSIDTS"))
+
+#token = "ewiguUbsFv4Y2Iwt_nPikDZ9GLaiRipbRV0fSXj4WIOKyGmi4nLMOnuujMU0vSfRvFXSSA."
+#session.cookies.set("__Secure-1PSID", "ewiguUbsFv4Y2Iwt_nPikDZ9GLaiRipbRV0fSXj4WIOKyGmi4nLMOnuujMU0vSfRvFXSSA.")
+#session.cookies.set( "__Secure-1PSIDCC", "ABTWhQHyagW_Ybo6WJ8jJz1Ezi-AQOkjfDzOWUJDHZ7qSVSWG57Aaai1UWdttFimXYRptA5_pQ")
+#session.cookies.set("__Secure-1PSIDTS", "sidts-CjIBPVxjSt7g0nnelJmIMozERAakcdpT4dInWEVHaC6iNFLuWtoKB3o-maUI2ndovnThEhAA")
+#session.headers = SESSION_HEADERS
 
 bard = Bard(token=token, session=session)
 st.title("Google Bard - With Internet Access")
 # Streamlit user input for queries.
-user_query = st.text_input("Enter your query:", "How is the weather today in Seoul?")
+user_query = st.text_input("Enter your query:","")
 
 # Get the answer from the Bard API using the user's query.
 if user_query:

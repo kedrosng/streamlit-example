@@ -70,7 +70,7 @@ def load_model() -> genai.GenerativeModel:
     'gemini-pro'.
     :return: an instance of the `genai.GenerativeModel` class.
     """
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-pro',generation_config=generation_config)
     return model
 
 @st.cache_resource
@@ -87,7 +87,16 @@ def load_modelvision() -> genai.GenerativeModel:
 #------------------------------------------------------------
 #CONFIGURATION
 genai.configure(api_key="AIzaSyBwibYDUMg8gFiKBvRRJjvJCiLTi6_Er3Q")
-
+temperature = st.sidebar.slider("Temperature", 0.0, 1.0, 0.6, 0.1)
+top_p = st.sidebar.number_input("Top P", 0.0, 1.0, 0.9)
+top_k = st.sidebar.number_input("Top K", 1, 85, 40)
+max_output_tokens = st.sidebar.number_input("Max Output Tokens", 1, 10000, 2048)
+generation_config = {
+        "temperature": temperature,
+        "top_p": top_p,
+        "top_k": top_k,
+        "max_output_tokens": max_output_tokens,
+    }
 model = load_model()
 
 vision = load_modelvision()

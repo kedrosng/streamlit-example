@@ -7,9 +7,10 @@ import json
 session = requests.Session()
 psid = st.text_input("Enter __Secure-1PSID value:")
 psidts = st.text_input("Enter __Secure-1PSIDTS value:")
+idcc = st.text_input("Enter IDCC value:")
 token = psid
 session.cookies.set("__Secure-1PSID", token)
-#session.cookies.set( "__Secure-1PSIDCC", "ABTWhQEdIisXan1iW4sYI4WxH-fugcaeNUV_F3Wg7a8CqH-U2G1yx0vbpxYk5fvSOLXyGYokyA")
+session.cookies.set( "__Secure-1PSIDCC", idcc)
 session.cookies.set("__Secure-1PSIDTS", psidts)
 session.headers = SESSION_HEADERS
 bard = Bard(token=token, session=session, timeout=30)

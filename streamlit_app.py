@@ -19,7 +19,7 @@ price_table = """
 | 7B                           | $5              | $0.28              |
 | 70B                          | $5              | $2.80              |
 """
-st.title("Chat with PPLX (Paid)")
+st.title("Perplexity AI (Paid)")
 
 
 url = "https://api.perplexity.ai/chat/completions" 

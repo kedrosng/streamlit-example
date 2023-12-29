@@ -81,7 +81,7 @@ def chat_history_to_md(chat_history):
     return markdown_text
 
 def text_page():
-    st.title("Gemini Pro 🤖")
+    st.title("Gemini Pro 🤖 (Free)")
     initialize_session_state()
     st.session_state.chat_placeholder = st.empty()
     st.session_state.chat_placeholder.markdown(chat_history_to_md(st.session_state.chat_history), unsafe_allow_html=True)

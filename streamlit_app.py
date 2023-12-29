@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="Chat with PPLX", page_icon=":robot:")
+st.set_page_config(page_title="Chat with PPLX (Paid)", page_icon=":robot:")
 
 
 price_table = """
@@ -19,7 +19,7 @@ price_table = """
 | 7B                           | $5              | $0.28              |
 | 70B                          | $5              | $2.80              |
 """
-st.title("Chat with PPLX")
+st.title("Chat with PPLX (Paid)")
 
 
 url = "https://api.perplexity.ai/chat/completions" 

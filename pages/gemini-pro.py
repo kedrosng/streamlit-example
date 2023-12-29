@@ -54,11 +54,11 @@ def get_response(user_input):
 
 def send_message():
     user_input = st.session_state.user_input
-    if user_input.strip():  # Check if the input is not just spaces
+    if user_input:
         response_data = get_response(user_input)
         st.session_state.chat_history.append({"user": user_input, "PPLX": response_data})
         st.session_state.chat_placeholder.markdown(chat_history_to_md(st.session_state.chat_history), unsafe_allow_html=True)
-        st.session_state.user_input = ""  # Clear the text area after sending the message
+        st.session_state.user_input = ""
 
 def chat_history_to_md(chat_history):
     markdown_text = ""
@@ -85,15 +85,8 @@ def text_page():
     initialize_session_state()
     st.session_state.chat_placeholder = st.empty()
     st.session_state.chat_placeholder.markdown(chat_history_to_md(st.session_state.chat_history), unsafe_allow_html=True)
-    
-    # Use text_area instead of text_input to allow multi-line input
-    user_input = st.text_area("You:", value="", key="user_input")
+    st.text_input("You:", value="", on_change=send_message, key="user_input")
 
-    # A button to send the message
-    if st.button('Send Message'):
-        send_message()
-
-    # A button to clear the chat history
     if st.button('Clear Chat'):
         st.session_state.chat_history = []
         st.session_state.chat_placeholder.empty()

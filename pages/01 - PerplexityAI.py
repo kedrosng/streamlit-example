@@ -45,12 +45,18 @@ if user_input:
     with st.chat_message("assistant"):
         response_loading = st.spinner("Loading response...")
         try:
-            response = requests.post(url, json={
+            # Send a POST request to the API and get the response
+            api_response = requests.post(url, json={
                 "model": st.session_state["model"],
                 "messages": st.session_state["messages"],
                 "temperature": 0.5
-            }, headers=headers).json()["choices"][0]["message"]["content"]
-            st.session_state["messages"].append({"role": "assistant", "content": response})
+            }, headers=headers).json()
+            
+            # Extract the content from the response
+            response_content = api_response["choices"][0]["message"]["content"]
+            
+            # Append the response content to the messages in the session state
+            st.session_state["messages"].append({"role": "assistant", "content": response_content})
         except Exception as e:
             st.error(f"Error fetching response from API: {str(e)}")
         finally:

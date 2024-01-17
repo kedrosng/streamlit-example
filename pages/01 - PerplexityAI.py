@@ -24,7 +24,7 @@ if "system_prompt" not in st.session_state:
     st.session_state["system_prompt"] = ""
 
 # Display model selection dropdown and description
-selected_model = st.selectbox("Select Model", [m["name"] for m in models], index=0)
+selected_model = st.selectbox("Select Model", models)
 model_description = models[models.index({"name": selected_model})]["description"]
 st.markdown(f"**{selected_model}** - {model_description}")
 

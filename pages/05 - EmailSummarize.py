@@ -2,7 +2,7 @@ import streamlit as st
 import json
 import google.generativeai as genai
 
-system_prompt = "Summary to email chain below:-"
+system_prompt = "Summary to email chain below in table format and provide action list:-"
 def initialize_session_state():
     if 'api_key' not in st.session_state:
         st.session_state['api_key'] = "AIzaSyBwibYDUMg8gFiKBvRRJjvJCiLTi6_Er3Q"

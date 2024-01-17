@@ -25,8 +25,6 @@ if "system_prompt" not in st.session_state:
 
 # Display model selection dropdown and description
 selected_model = st.selectbox("Select Model", models)
-model_description = models[models.index({"name": selected_model})]["description"]
-st.markdown(f"**{selected_model}** - {model_description}")
 
 # Display system prompt input
 system_prompt = st.text_input("System Prompt (optional)", value=st.session_state["system_prompt"], key="system_prompt")

@@ -16,3 +16,4 @@ BingImageCreator
 certifi
 prompt_toolkit
 rich
+mistralai

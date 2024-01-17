@@ -11,3 +11,8 @@ deep_translator
 google-cloud-translate
 browser_cookie3
 bardapi
+aiohttp
+BingImageCreator
+certifi
+prompt_toolkit
+rich

@@ -17,7 +17,7 @@ st.header("Perplexity AI (Paid)")
 
 # Set initial session state
 if "model" not in st.session_state:
-    st.session_state["model"] = models[0]["name"]
+    st.session_state["model"] = "pplx-7b-online"
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 if "system_prompt" not in st.session_state:

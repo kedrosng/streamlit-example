@@ -3,7 +3,6 @@ import requests
 
 st.set_page_config(page_title="Perplexity AI (Paid)", page_icon=":robot:")
 
-
 price_table = """
 | Model Parameter Count | $/1M input tokens | $/1M output tokens |
 |-----------------------|-------------------|--------------------|
@@ -19,67 +18,70 @@ price_table = """
 | 7B                           | $5              | $0.28              |
 | 70B                          | $5              | $2.80              |
 """
-st.title("Perplexity AI (Paid)")
 
+url = "https://api.perplexity.ai/chat/completions"
+headers = {"authorization": "Bearer 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"}
+models = ["pplx-7b-online", "pplx-70b-chat", "pplx-7b-chat", "pplx-70b-online", "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct", "mixtral-8x7b-instruct"]
 
-url = "https://api.perplexity.ai/chat/completions" 
-headers = {
-    "authorization": "Bearer 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"
-}
+st.header("Perplexity AI (Paid)")
 
-models = [
-    "pplx-7b-online",
-    "pplx-70b-chat", "pplx-7b-chat", "pplx-70b-online","llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct","mixtral-8x7b-instruct"
-]
+# Function to reset the state
+def reset_state():
+    for key in st.session_state:
+        del st.session_state[key]
 
+# Get the model from the session state or the user
+if "model" not in st.session_state:
+    st.session_state["model"] = st.selectbox("Select Model", models)
 
+st.markdown("You are chatting with the **{}** model.".format(st.session_state["model"]))
 
-selected_model = st.sidebar.selectbox("Select Model", models)
-st.text(f"You are chatting with the {selected_model} model.")
+# Initialize the chat history in session state if it's not already set
 if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
-
-def get_response(prompt):
-    payload = {"model": selected_model, "messages": [{"role": "user", "content": prompt}]}
-    response = requests.post(url, json=payload, headers=headers).json()
-    return response["choices"][0]["message"]["content"]
+    st.session_state["chat_history"] = []
 
 # Placeholder for the chat output
 chat_placeholder = st.empty()
 
-def send_message():
-    user_input = st.session_state.user_input
-    if user_input:  # Check if the input is not empty
-        response = get_response(user_input)
-        # Append both user and PPLX messages to the chat history
-        st.session_state.chat_history.append({"user": user_input, "PPLX": response})
-        # Update the chat display
-        chat_placeholder.markdown(chat_history_to_md(st.session_state.chat_history), unsafe_allow_html=True)
-        # Clear the input field
-        st.session_state.user_input = ""
+# Function to send a message and get a response
+def send_message(prompt):
+    payload = {"model": st.session_state["model"], "messages": [{"role": "user", "content": prompt}]}
+    response = requests.post(url, json=payload, headers=headers).json()
+    st.session_state["chat_history"].append({"role": "user", "content": prompt})
+    st.session_state["chat_history"].append({"role": "assistant", "content": response["choices"][0]["message"]["content"]})
+    update_chat_display()
 
-def chat_history_to_md(chat_history):
+# Function to update the chat display
+def update_chat_display():
+    chat_history = st.session_state["chat_history"]
     markdown_text = ""
-    chat_id = 1
-    for msg in chat_history:
-        markdown_text += f"**#{chat_id} You:** {msg['user']}\n\n"
-        markdown_text += f"**#{chat_id} ChatBotPPLX:** {msg['PPLX']}\n\n"
-        chat_id += 1
-    return markdown_text
-
-chat_placeholder.markdown(chat_history_to_md(st.session_state.chat_history), unsafe_allow_html=True)
-
-user_input = st.text_input("You:", value="", on_change=send_message, key="user_input")
-
-
-st.sidebar.markdown("## Pricing Information")
-st.sidebar.markdown(price_table)
+    for i, message in enumerate(chat_history):
+        role = message["role"]
+        content = message["content"]
+        if role == "user":
+            markdown_text += f"**User** > {content}\n"
+        else:
+            markdown_text += f"**Assistant** > {content}\n"
+    chat_placeholder.markdown(markdown_text)
 
 # Function to clear the chat
 def clear_chat():
-    st.session_state.chat_history = []
-    chat_placeholder.empty()  # Clear the chat display
+    reset_state()
+    update_chat_display()
 
-# Button to clear the chat
-if st.button('Clear Chat'):
-    clear_chat()
+# Add a text input for the user to enter their message
+input_box = st.text_input("Type your message here...")
+
+# Add a button to send the message and get a response
+if st.button("Send"):
+    send_message(input_box)
+
+# Add a button to clear the chat
+st.sidebar.button("Clear Chat", on_click=clear_chat)
+
+# Add the pricing table to the sidebar
+st.sidebar.markdown("## Pricing Information")
+st.sidebar.markdown(price_table)
+
+# Call the update_chat_display function to initialize the chat display
+update_chat_display()

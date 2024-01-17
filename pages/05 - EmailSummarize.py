@@ -37,7 +37,7 @@ def configure_ai_model():
 def get_response(user_input):
     gemini = configure_ai_model()
     chat_history = st.session_state.chat_history
-    prompt_parts = [msg['user'] for msg in chat_history] + [system_prompt] + [user_input]
+    prompt_parts = [msg['user'] for msg in chat_history] + [user_input]
     
     try:
         response = gemini.generate_content(prompt_parts)

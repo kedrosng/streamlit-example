@@ -10,7 +10,7 @@ st.markdown("### Google Gemini AI")
 st.markdown("""
 Gemini AI is Google's most advanced and capable AI model. It is multimodal, meaning it can understand not just text but also images, videos, and audio. It is capable of completing complex tasks in math, physics, and other areas, as well as understanding and generating high-quality code in various programming languages. It is available in three different sizes: Ultra, Pro, and Nano[1][5][13].
 """)
-st.image("gemini_ai_logo.png")  # Add a logo or relevant image if available
+
 st.markdown("**Pricing for Google Gemini AI**")
 st.markdown("""
 | Model | Input Type | $/Unit |
@@ -25,7 +25,7 @@ st.markdown("### Mistral AI")
 st.markdown("""
 Mistral AI offers compute efficient, powerful AI models with a strong research focus. It provides a user-friendly interface, intuitive navigation, and a wide range of features, including content generation, accurate information provision, mobile app availability, and Chrome extension integration[3][11].
 """)
-st.image("mistral_ai_logo.png")  # Add a logo or relevant image if available
+
 st.markdown("**Pricing for Mistral AI**")
 st.markdown("""
 | Model | Input | Output |
@@ -39,7 +39,7 @@ st.markdown("### Perplexity AI")
 st.markdown("""
 Perplexity AI is an answer engine that aims to deliver accurate answers to questions using large language models.
 """)
-st.image("perplexity_ai_logo.png")  # Add a logo or relevant image if available
+
 st.markdown("**Pricing for Perplexity AI**")
 st.markdown("""
 | Model Parameter Count | $/1M input tokens | $/1M output tokens |

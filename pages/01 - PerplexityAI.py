@@ -21,7 +21,7 @@ price_table = """
 
 url = "https://api.perplexity.ai/chat/completions"
 headers = {"authorization": "Bearer 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"}
-models = ["pplx-7b-online", "pplx-70b-chat", "pplx-7b-chat", "pplx-70b-online", "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct", "mixtral-8x7b-instruct"]
+model_options = ["pplx-7b-online", "pplx-70b-chat", "pplx-7b-chat", "pplx-70b-online", "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct", "mixtral-8x7b-instruct"]
 
 st.header("Perplexity AI (Paid)")
 
@@ -32,9 +32,9 @@ def reset_state():
 
 # Get the model from the session state or the user
 if "model" not in st.session_state:
-    st.session_state["model"] = st.selectbox("Select Model", models)
+    st.session_state["model"] = st.selectbox('Select a model', model_options, index=model_options.index(st.session_state["model"]), key="model_select")
 
-st.markdown("You are chatting with the **{}** model.".format(st.session_state["model"]))
+#st.markdown("You are chatting with the **{}** model.".format(st.session_state["model"]))
 
 # Initialize the chat history in session state if it's not already set
 if "chat_history" not in st.session_state:

@@ -4,7 +4,15 @@ import streamlit as st
 import os
 
 st.title("Mistral AI (Paid)")
-
+price_table = """
+| Model | Input | Output |
+|-------|-------|--------|
+| mistral-tiny | 0.14€ / 1M tokens | 0.42€ / 1M tokens |
+| mistral-small | 0.6€ / 1M tokens | 1.8€ / 1M tokens |
+| mistral-medium | 2.5€ / 1M tokens | 7.5€ / 1M tokens[4] |
+"""
+st.sidebar.markdown("## Pricing Information")
+st.sidebar.markdown(price_table)
 # Function to reset the state
 def reset_state():
     for key in st.session_state:

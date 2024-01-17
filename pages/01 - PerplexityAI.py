@@ -60,7 +60,10 @@ if user_input:
         except Exception as e:
             st.error(f"Error fetching response from API: {str(e)}")
         finally:
-            response_loading.empty()
+            try:
+                response_loading.empty()
+            except Exception as e:
+                st.error(f"Error when trying to remove the loading spinner: {str(e)}")
 
 # Display message count and timestamp
 message_count = len(st.session_state["messages"])

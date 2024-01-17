@@ -34,7 +34,8 @@ if "mistral_model" not in st.session_state:
     st.session_state["mistral_model"] = 'mistral-tiny'
 
 # Always display the dropdown
-model_options = ('mistral-tiny', 'mistral-small', 'mistral-medium')
+#model_options = ('mistral-tiny', 'mistral-small', 'mistral-medium')
+model_options = ('mistral-tiny', 'mistral-small')
 st.session_state["mistral_model"] = st.selectbox('Select a model', model_options, index=model_options.index(st.session_state["mistral_model"]), key="model_select")
 
 # Add system prompt input

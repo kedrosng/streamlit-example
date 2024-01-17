@@ -10,15 +10,7 @@ url = "https://api.perplexity.ai/chat/completions"
 headers = {"authorization": "Bearer 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"}
 
 # Define models and descriptions
-models = [
-    {"name": "pplx-7b-online", "description": "7B parameter model trained on a diverse range of internet text."},
-    {"name": "pplx-70b-chat", "description": "70B parameter model fine-tuned for chat."},
-    {"name": "pplx-7b-chat", "description": "7B parameter model fine-tuned for chat."},
-    {"name": "pplx-70b-online", "description": "70B parameter model trained on a diverse range of internet text."},
-    {"name": "llama-2-70b-chat", "description": "70B parameter model fine-tuned for chat by Mistral AI."},
-    {"name": "codellama-34b-instruct", "description": "34B parameter model fine-tuned for instruction following by Mistral AI."},
-    {"name": "mistral-7b-instruct", "description": "7B parameter model fine-tuned for instruction following by Mistral AI."},
-    {"name": "mixtral-8x7b-instruct", "description": "8x7B parameter model ensemble fine-tuned for instruction following by Mistral AI."}
+models = ["pplx-7b-online", "pplx-70b-chat", "pplx-7b-chat", "pplx-70b-online", "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct", "mixtral-8x7b-instruct"}
 ]
 
 # Set page title and icon

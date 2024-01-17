@@ -1,87 +1,77 @@
 import streamlit as st
 import requests
+import datetime
 
+# Set page config
 st.set_page_config(page_title="Perplexity AI (Paid)", page_icon=":robot:")
 
-price_table = """
-| Model Parameter Count | $/1M input tokens | $/1M output tokens |
-|-----------------------|-------------------|--------------------|
-| 7B                    | $0.07             | $0.28              |
-| 13B                   | $0.14             | $0.56              |
-| 34B                   | $0.35             | $1.40              |
-| 70B                   | $0.70             | $2.80              |
-
-**Online Model Pricing**
-
-| Online Model Parameter Count | $/1000 requests | $/1M output tokens |
-|------------------------------|-----------------|--------------------|
-| 7B                           | $5              | $0.28              |
-| 70B                          | $5              | $2.80              |
-"""
-
+# Define API endpoint and headers
 url = "https://api.perplexity.ai/chat/completions"
 headers = {"authorization": "Bearer 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"}
-models = ["pplx-7b-online", "pplx-70b-chat", "pplx-7b-chat", "pplx-70b-online", "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct", "mixtral-8x7b-instruct"]
 
+# Define models and descriptions
+models = [
+    {"name": "pplx-7b-online", "description": "7B parameter model trained on a diverse range of internet text."},
+    {"name": "pplx-70b-chat", "description": "70B parameter model fine-tuned for chat."},
+    {"name": "pplx-7b-chat", "description": "7B parameter model fine-tuned for chat."},
+    {"name": "pplx-70b-online", "description": "70B parameter model trained on a diverse range of internet text."},
+    {"name": "llama-2-70b-chat", "description": "70B parameter model fine-tuned for chat by Mistral AI."},
+    {"name": "codellama-34b-instruct", "description": "34B parameter model fine-tuned for instruction following by Mistral AI."},
+    {"name": "mistral-7b-instruct", "description": "7B parameter model fine-tuned for instruction following by Mistral AI."},
+    {"name": "mixtral-8x7b-instruct", "description": "8x7B parameter model ensemble fine-tuned for instruction following by Mistral AI."}
+]
+
+# Set page title and icon
 st.header("Perplexity AI (Paid)")
 
-# Function to reset the state
-def reset_state():
-    for key in st.session_state:
-        del st.session_state[key]
-
-# Get the model from the session state or the user
+# Set initial session state
 if "model" not in st.session_state:
-    st.session_state["model"] = st.selectbox("Select Model", models)
+    st.session_state["model"] = models[0]["name"]
+if "messages" not in st.session_state:
+    st.session_state["messages"] = []
+if "system_prompt" not in st.session_state:
+    st.session_state["system_prompt"] = ""
 
-st.markdown("You are chatting with the **{}** model.".format(st.session_state["model"]))
+# Display model selection dropdown and description
+selected_model = st.selectbox("Select Model", [m["name"] for m in models], index=0)
+model_description = models[models.index({"name": selected_model})]["description"]
+st.markdown(f"**{selected_model}** - {model_description}")
 
-# Initialize the chat history in session state if it's not already set
-if "chat_history" not in st.session_state:
-    st.session_state["chat_history"] = []
+# Display system prompt input
+system_prompt = st.text_input("System Prompt (optional)", value=st.session_state["system_prompt"], key="system_prompt")
 
-# Placeholder for the chat output
-chat_placeholder = st.empty()
+# Add system prompt to messages if it's not already there
+if system_prompt and not any(m["role"] == "system" for m in st.session_state["messages"]):
+    st.session_state["messages"].insert(0, {"role": "system", "content": system_prompt})
 
-# Function to send a message and get a response
-def send_message(prompt):
-    payload = {"model": st.session_state["model"], "messages": [{"role": "user", "content": prompt}]}
-    response = requests.post(url, json=payload, headers=headers).json()
-    st.session_state["chat_history"].append({"role": "user", "content": prompt})
-    st.session_state["chat_history"].append({"role": "assistant", "content": response["choices"][0]["message"]["content"]})
-    update_chat_display()
+# Display chat messages
+for i, message in enumerate(st.session_state["messages"]):
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-# Function to update the chat display
-def update_chat_display():
-    chat_history = st.session_state["chat_history"]
-    markdown_text = ""
-    for i, message in enumerate(chat_history):
-        role = message["role"]
-        content = message["content"]
-        if role == "user":
-            markdown_text += f"**User** > {content}\n"
-        else:
-            markdown_text += f"**Assistant** > {content}\n"
-    chat_placeholder.markdown(markdown_text)
+# Display user input and assistant response
+user_input = st.chat_input("Type your message here...")
+if user_input:
+    st.session_state["messages"].append({"role": "user", "content": user_input})
+    with st.chat_message("assistant"):
+        response_loading = st.spinner("Loading response...")
+        try:
+            response = requests.post(url, json={
+                "model": st.session_state["model"],
+                "messages": st.session_state["messages"],
+                "temperature": 0.5
+            }, headers=headers).json()["choices"][0]["message"]["content"]
+            st.session_state["messages"].append({"role": "assistant", "content": response})
+        except Exception as e:
+            st.error(f"Error fetching response from API: {str(e)}")
+        finally:
+            response_loading.empty()
 
-# Function to clear the chat
-def clear_chat():
-    reset_state()
-    update_chat_display()
+# Display message count and timestamp
+message_count = len(st.session_state["messages"])
+current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+st.write(f"**{message_count} messages** | {current_time}")
 
-# Add a text input for the user to enter their message
-input_box = st.text_input("Type your message here...")
-
-# Add a button to send the message and get a response
-if st.button("Send"):
-    send_message(input_box)
-
-# Add a button to clear the chat
-st.sidebar.button("Clear Chat", on_click=clear_chat)
-
-# Add the pricing table to the sidebar
-st.sidebar.markdown("## Pricing Information")
-st.sidebar.markdown(price_table)
-
-# Call the update_chat_display function to initialize the chat display
-update_chat_display()
+# Add clear chat button
+if st.button("Clear Chat"):
+    st.session_state["messages"] = []

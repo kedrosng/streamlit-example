@@ -10,7 +10,7 @@ url = "https://api.perplexity.ai/chat/completions"
 headers = {"authorization": "Bearer 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"}
 
 # Define models and descriptions
-models = ["pplx-7b-online", "pplx-70b-chat", "pplx-7b-chat", "pplx-70b-online", "llama-2-70b-chat", "codellama-34b-instruct", "mistral-7b-instruct", "mixtral-8x7b-instruct"]
+models = ["sonar-small-chat", "sonar-small-online", "sonar-medium-chat", "sonar-medium-online", "codellama-34b-instruct", "codellama-70b-instruct", "llama-2-70b-chat", "mistral-7b-instruct", "mixtral-8x7b-instruct", "pplx-7b-chat", "pplx-70b-chat", "pplx-7b-online", "pplx-70b-online"]
 
 # Set page title and icon
 st.header("Perplexity AI (Paid)")

@@ -35,14 +35,12 @@ system_prompt = st.text_input("System Prompt (optional)", value=st.session_state
 if system_prompt and not any(m["role"] == "system" for m in st.session_state["messages"]):
     st.session_state["messages"].insert(0, {"role": "system", "content": system_prompt})
 
-# Display chat messages in a scrollable container
-messages_container = st.beta_container()
+# Display chat messages
 for i, message in enumerate(st.session_state["messages"]):
-    with messages_container:
-        if message["role"] == "user":
-            st.text_area("You", value=message["content"], height=100, key=f"user_{i}")
-        elif message["role"] == "assistant":
-            st.text_area("Assistant", value=message["content"], height=100, key=f"assistant_{i}")
+    if message["role"] == "user":
+        st.text_area("You", value=message["content"], height=100, key=f"user_{i}")
+    elif message["role"] == "assistant":
+        st.text_area("Assistant", value=message["content"], height=100, key=f"assistant_{i}")
 
 # Display user input and assistant response
 user_input = st.text_input("Type your message here...", key="user_input")

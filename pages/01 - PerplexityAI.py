@@ -33,37 +33,45 @@ system_prompt = st.text_input("System Prompt (optional)", value=st.session_state
 if system_prompt and not any(m["role"] == "system" for m in st.session_state["messages"]):
     st.session_state["messages"].insert(0, {"role": "system", "content": system_prompt})
 
-# Display chat messages
-for i, message in enumerate(st.session_state["messages"]):
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+# Create columns for input and messages
+col1, col2 = st.beta_columns([1, 5])
+
+# Display chat messages in a scrollable container
+with col2:
+    messages_container = st.beta_container()
+    for i, message in enumerate(st.session_state["messages"]):
+        with messages_container.chat_message(message["role"]):
+            st.markdown(message["content"])
 
 # Display user input and assistant response
-user_input = st.chat_input("Type your message here...")
-if user_input:
-    st.session_state["messages"].append({"role": "user", "content": user_input})
-    with st.chat_message("assistant"):
-        response_loading = st.spinner("Loading response...")
-        try:
-            # Send a POST request to the API and get the response
-            api_response = requests.post(url, json={
-                "model": st.session_state["model"],
-                "messages": st.session_state["messages"],
-                "temperature": 0.5
-            }, headers=headers).json()
-            
-            # Extract the content from the response
-            response_content = api_response["choices"][0]["message"]["content"]
-            
-            # Append the response content to the messages in the session state
-            st.session_state["messages"].append({"role": "assistant", "content": response_content})
-        except Exception as e:
-            st.error(f"Error fetching response from API: {str(e)}")
-        finally:
+with col1:
+    user_input = st.text_input("Type your message here...", key="user_input")
+    submit_button = st.button("Send", key="submit")
+
+    if submit_button and user_input:
+        st.session_state["messages"].append({"role": "user", "content": user_input})
+        with messages_container.chat_message("assistant"):
+            response_loading = st.spinner("Loading response...")
             try:
-                response_loading.empty()
+                # Send a POST request to the API and get the response
+                api_response = requests.post(url, json={
+                    "model": st.session_state["model"],
+                    "messages": st.session_state["messages"],
+                    "temperature": 0.5
+                }, headers=headers).json()
+
+                # Extract the content from the response
+                response_content = api_response["choices"][0]["message"]["content"]
+
+                # Append the response content to the messages in the session state
+                st.session_state["messages"].append({"role": "assistant", "content": response_content})
             except Exception as e:
-                st.error(f"Error when trying to remove the loading spinner: {str(e)}")
+                st.error(f"Error fetching response from API: {str(e)}")
+            finally:
+                try:
+                    response_loading.empty()
+                except Exception as e:
+                    st.error(f"Error when trying to remove the loading spinner: {str(e)}")
 
 # Display message count and timestamp
 message_count = len(st.session_state["messages"])
@@ -73,3 +81,4 @@ st.write(f"**{message_count} messages** | {current_time}")
 # Add clear chat button
 if st.button("Clear Chat"):
     st.session_state["messages"] = []
+    st.session_state["system_prompt"] = ""

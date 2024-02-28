@@ -7,7 +7,7 @@ st.set_page_config(page_title="Perplexity AI Chatbot", page_icon=":robot:")
 
 # Define API endpoint and headers
 url = "https://api.perplexity.ai/chat/completions"
-headers = {"Authorization": "Bearer YOUR_API_KEY_HERE"}
+headers = {"Authorization": "Bearer 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"}
 
 # Define models for selection
 models = [
